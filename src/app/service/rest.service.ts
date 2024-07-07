@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Token, User, Vehicle } from '../models/authentication';
 import { Availability, Book, Garage, Image } from '../models/garagement';
+import { Report } from '../models/report';
 
 import {
   CesionParking,
@@ -228,4 +229,11 @@ export class RestService extends WsAbstractService {
     return await this.makePutRequest(`${this.path}/updateVehicle/`, vehicleId);
   }
 
+  async postCreateReport(report: Report): Promise<any> {
+    return await this.makePostRequest(`${this.path}/reports/create/`, report);
+  }
+
+  async listReportsByUser(): Promise<Report[]> {
+    return await this.makeGetRequest(`${this.path}/reports/list/`);
+  }
 }

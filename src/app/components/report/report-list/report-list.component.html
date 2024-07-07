@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --border-color: transparent;"></ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar style="--background: transparent; --border-color: transparent;">
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-button class="faq-button" (click)="redirectToFaq()">
+          <ion-icon name="help-circle"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+      <ion-card-title>Mis incidencias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div *ngIf="reports.length; else noReports">
+        <ion-card *ngFor="let report of reports">
+          <ion-card-header>
+            <ion-card-title>{{ report.title }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-row class="ion-text-center">
+              <ion-col size="4">
+                <p><strong>Estado:</strong></p>
+                <p>{{ report.status }}
+                  <span *ngIf="report.status === Status.PENDIENTE" class="status-circle yellow"></span>
+                  <span *ngIf="report.status === Status.CANCELADO" class="status-circle red"></span>
+                  <span *ngIf="report.status === Status.RESUELTO" class="status-circle green"></span>
+                </p>
+              </ion-col>
+              <ion-col size="4">
+                <p><strong>Fecha creación:</strong></p>
+                <p>{{ report.created_at | date: 'dd/MM/yyyy' }}</p>
+              </ion-col>
+              <ion-col size="4">
+                <p><strong>Categoría:</strong></p>
+                <p>{{ report.category }}</p>
+              </ion-col>
+            </ion-row>
+            <p class="text-center"><strong>Descripción:</strong></p>
+            <p class="text-center">{{ report.description }}</p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <ng-template #noReports>
+        <div style="text-align: center; margin-top: 20px;">
+          No tienes incidencias creadas.
+        </div>
+      </ng-template>
+    </ion-card-content>
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button color="success" (click)="redirectToCreateReport()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

@@ -120,21 +120,24 @@
         <div
           style="color: white; background-color: green; border-radius: 10px; padding: 5px; font-size: 24px; text-align: center; display: flex; align-items: center; justify-content: center;">
           <ion-icon name="save" style="margin-right: 5px;"></ion-icon>
-          <span style="font-size: 14px;">Guardar</span>
         </div>
       </ion-button>
       <ion-button color="danger" (click)="deleteProfile()">
         <div
           style="color: white; background-color: red; border-radius: 10px; padding: 5px; font-size: 24px; text-align: center; display: flex; align-items: center; justify-content: center;">
           <ion-icon name="trash" style="margin-right: 5px;"></ion-icon>
-          <span style="font-size: 14px;">Borrar</span>
         </div>
       </ion-button>
       <ion-button slot="end" class="register-vehicle-button" color="primary" (click)="redirectToVehicleList()">
         <div
           style="color: white; background-color: blue; border-radius: 10px; padding: 5px; font-size: 24px; text-align: center; display: flex; align-items: center; justify-content: center;">
           <ion-icon name="car" style="margin-right: 5px;"></ion-icon>
-          <span style="font-size: 14px;">Vehículos</span>
+        </div>
+      </ion-button>
+      <ion-button slot="end" class="register-vehicle-button" color="warning" (click)="redirectToReportList()">
+        <div
+          style="color: white; background-color: orange; border-radius: 10px; padding: 5px; font-size: 24px; text-align: center; display: flex; align-items: center; justify-content: center;">
+          <ion-icon name="alert" style="margin-right: 5px;"></ion-icon>
         </div>
       </ion-button>
     </ion-buttons>

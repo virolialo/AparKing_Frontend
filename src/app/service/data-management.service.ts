@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { constants } from '../constants.ts';
 import { Token, User, Vehicle } from '../models/authentication';
+import { Garage } from '../models/garagement';
 import {
   CesionParking,
   City,
@@ -15,6 +16,7 @@ import {
   ParkingResponse,
 } from '../models/parking';
 import { CombinedDataPayment } from '../models/payments.js';
+import { Report } from '../models/report';
 import { PersistenceService } from './persistence.service';
 import { RestService } from './rest.service';
 
@@ -236,4 +238,43 @@ export class DataManagementService {
         throw err;
       });
   }
+
+  async listReportsByUser(): Promise<Report[]> {
+    return this.rest
+      .listReportsByUser()
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  }
+
+  async postReportRegister(report: Report): Promise<void> {
+    return this.rest
+      .postCreateReport(report)
+      .then(async (data) => {
+        this.vehicleRegistered.next();
+        return data;
+      })
+      .catch((err: HttpErrorResponse) => {
+        throw err;
+      });
+  }
+
+  async getMyGarages(): Promise<Garage[]> {
+    return this.rest
+      .getMyGarages()
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  }
+
 }

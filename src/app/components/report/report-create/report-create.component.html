@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar style="--background: transparent; --border-color: transparent;">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/G11/aparKing/tab3"></ion-back-button>
+        </ion-buttons>
+        <ion-card-title>Nueva incidencia</ion-card-title>
+      </ion-toolbar>
+    </ion-card-header>
+    <form [formGroup]="reportForm" (submit)="registerSubmit()">
+      <ion-card-content>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Título</ion-label>
+          <ion-input formControlName="title" placeholder="Introduce un título" type="text"></ion-input>
+        </ion-item>
+        <div class="error-message"
+          *ngIf="reportForm.controls['title'].invalid && (reportForm.controls['title'].dirty || reportForm.controls['title'].touched)">
+          El título es obligatorio
+        </div>
+        <div class="error-message" *ngIf="reportForm.controls['title'].errors?.['maxlength']">
+          El titulo no puede exceder los 50 caracteres
+        </div>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Categoría</ion-label>
+          <ion-select formControlName="category">
+            <ion-select-option value="bug">Bug</ion-select-option>
+            <ion-select-option value="reservas">Reservas</ion-select-option>
+            <ion-select-option value="cesiones">Cesiones</ion-select-option>
+            <ion-select-option value="garajes" *ngIf="garages.length > 0">Garajes</ion-select-option>
+            <ion-select-option value="vehiculos" *ngIf="vehicles.length > 0">Vehiculos</ion-select-option>
+            <ion-select-option value="otro">Otro</ion-select-option>
+          </ion-select>
+          <div class="error-message"
+            *ngIf="reportForm.controls['category'].invalid && (reportForm.controls['category'].dirty || reportForm.controls['category'].touched)">
+            La categoría es obligatoria
+          </div>
+        </ion-item>
+
+        <ion-item class="input-item" *ngIf="reportForm.get('category')?.value === 'vehiculos'">
+          <ion-select formControlName="optionDropdown" label="Modelo de Vehículo">
+            <ion-select-option *ngFor="let model of vehicles" [ngValue]="model.carModel">{{ model.carModel
+              }}</ion-select-option>
+          </ion-select>
+          <div class="error-message"
+            *ngIf="reportForm.controls['optionDropdown'].invalid && (reportForm.controls['optionDropdown'].dirty || reportForm.controls['optionDropdown'].touched)">
+            Debes seleccionar uno de los vehiculos
+          </div>
+        </ion-item>
+
+        <ion-item class="input-item" *ngIf="reportForm.get('category')?.value === 'garajes'">
+          <ion-select formControlName="optionDropdown" label="Garajes creados">
+            <ion-select-option *ngFor="let model of garages" [ngValue]="model.name">{{ model.name
+              }}</ion-select-option>
+          </ion-select>
+          <div class="error-message"
+            *ngIf="reportForm.controls['optionDropdown'].invalid && (reportForm.controls['optionDropdown'].dirty || reportForm.controls['optionDropdown'].touched)">
+            Debes seleccionar uno de los garajes creados
+          </div>
+        </ion-item>
+
+        <ion-item class="input-item">
+          <ion-label position="floating">Descripción</ion-label>
+          <ion-textarea formControlName="description" placeholder="Describe el reporte"></ion-textarea>
+        </ion-item>
+        <div class="error-message"
+          *ngIf="reportForm.controls['description'].invalid && (reportForm.controls['description'].dirty || reportForm.controls['description'].touched)">
+          La descripción es obligatoria
+        </div>
+        <div class="error-message" *ngIf="reportForm.controls['description'].errors?.['maxlength']">
+          La descripción no puede exceder los 255 caracteres
+        </div>
+
+        <ion-button expand="full" type="submit" [disabled]="!reportForm.valid" shape="round" color="success">
+          Registrar
+        </ion-button>
+      </ion-card-content>
+    </form>
+  </ion-card>
+</ion-content>
