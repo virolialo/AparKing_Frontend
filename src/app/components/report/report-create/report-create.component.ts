@@ -40,6 +40,7 @@ export class ReportCreateComponent implements OnInit {
   ngOnInit() {
     this.loadVehicleModels();
     this.loadUserGarages();
+    this.loadUserBookings();
   }
 
   async registerSubmit() {
@@ -55,8 +56,6 @@ export class ReportCreateComponent implements OnInit {
           description = `Asociado al garaje "${this.reportForm.value.optionDropdown}": ${description}`;
         } else if ((this.reportForm.value.category === 'vehiculos' && this.reportForm.value.optionDropdown)) {
           description = `Asociado al vehículo con matricula "${this.reportForm.value.optionDropdown}": ${description}`;
-        } else if ((this.reportForm.value.category === 'reservas' && this.reportForm.value.optionDropdown)) {
-          description = `Asociado a la reserva "${this.reportForm.value.optionDropdown}": ${description}`;
         }
 
         const formValueWithModifiedDescription = {
