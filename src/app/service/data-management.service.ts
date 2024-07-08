@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { constants } from '../constants.ts';
 import { Token, User, Vehicle } from '../models/authentication';
-import { Garage } from '../models/garagement';
+import { Book, Garage } from '../models/garagement';
 import {
   CesionParking,
   City,
@@ -267,6 +267,19 @@ export class DataManagementService {
   async getMyGarages(): Promise<Garage[]> {
     return this.rest
       .getMyGarages()
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .catch((err) => {
+        console.error(err);
+        throw err;
+      });
+  }
+
+  async getMyBookings(): Promise<Book[]> {
+    return this.rest
+      .getBookings()
       .then((data) => {
         console.log(data);
         return data;

@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Vehicle } from 'src/app/models/authentication';
-import { Garage } from 'src/app/models/garagement';
+import { Book, Garage } from 'src/app/models/garagement';
 import { DataManagementService } from 'src/app/service/data-management.service';
 
 
@@ -16,6 +16,7 @@ export class ReportCreateComponent implements OnInit {
   reportForm: FormGroup;
   garages: Garage[] = [];
   vehicles: Vehicle[] = [];
+  bookings: Book[] = [];
 
   constructor(
     private dataManagementService: DataManagementService,
@@ -43,7 +44,7 @@ export class ReportCreateComponent implements OnInit {
 
   async registerSubmit() {
 
-    if ((this.reportForm.value.category === 'garajes' || this.reportForm.value.category === 'vehiculos') && !this.reportForm.value.optionDropdown) {
+    if ((this.reportForm.value.category === 'garajes' || this.reportForm.value.category === 'vehiculos' || this.reportForm.value.category === 'reservas') && !this.reportForm.value.optionDropdown) {
       alert('Debes seleccionar al menos una opción en la categoría elegida.');
       return;
     }
@@ -54,6 +55,8 @@ export class ReportCreateComponent implements OnInit {
           description = `Asociado al garaje "${this.reportForm.value.optionDropdown}": ${description}`;
         } else if ((this.reportForm.value.category === 'vehiculos' && this.reportForm.value.optionDropdown)) {
           description = `Asociado al vehículo con matricula "${this.reportForm.value.optionDropdown}": ${description}`;
+        } else if ((this.reportForm.value.category === 'reservas' && this.reportForm.value.optionDropdown)) {
+          description = `Asociado a la reserva "${this.reportForm.value.optionDropdown}": ${description}`;
         }
 
         const formValueWithModifiedDescription = {
@@ -100,6 +103,21 @@ export class ReportCreateComponent implements OnInit {
       console.log('garages:', this.garages);
     } catch (error) {
       console.error('Error loading user garages', error);
+    }
+  }
+
+  async loadUserBookings() {
+    try {
+      const result = await this.dataManagementService.getMyBookings();
+      if (result && result.length > 0) {
+        this.bookings = result;
+        this.reportForm.get('bookingsDropdown')?.enable();
+      } else {
+        this.reportForm.get('bookingsDropdown')?.disable();
+      }
+      console.log('bookings:', this.bookings);
+    } catch (error) {
+      console.error('Error loading user bookings', error);
     }
   }
 

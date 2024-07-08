@@ -35,7 +35,7 @@
           <ion-label position="floating">Categoría</ion-label>
           <ion-select formControlName="category">
             <ion-select-option value="bug">Bug</ion-select-option>
-            <ion-select-option value="reservas">Reservas</ion-select-option>
+            <ion-select-option value="reservas" *ngIf="bookings.length > 0">Reservas</ion-select-option>
             <ion-select-option value="cesiones">Cesiones</ion-select-option>
             <ion-select-option value="garajes" *ngIf="garages.length > 0">Garajes</ion-select-option>
             <ion-select-option value="vehiculos" *ngIf="vehicles.length > 0">Vehiculos</ion-select-option>
